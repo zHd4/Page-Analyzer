@@ -1,5 +1,17 @@
+buildscript {
+    repositories {
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
+    dependencies {
+        classpath "com.github.johnrengelman:shadow:8.1.1"
+    }
+}
+
 plugins {
     id 'application'
+    id "com.github.johnrengelman.shadow" version "8.1.1"
 }
 
 group = 'hexlet.code'
@@ -12,6 +24,8 @@ repositories {
 application {
     mainClass = 'hexlet.code.App'
 }
+
+apply plugin: "com.github.johnrengelman.shadow"
 
 dependencies {
     implementation 'io.javalin:javalin:6.0.1'
