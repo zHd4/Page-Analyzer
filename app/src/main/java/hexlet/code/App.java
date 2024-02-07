@@ -53,7 +53,6 @@ public class App {
         HikariDataSource dataSource = new HikariDataSource(hikariConfig);
         var sql = readResourceFile("schema.sql");
 
-        log.info(sql);
         try (Connection connection = dataSource.getConnection();
              Statement statement = connection.createStatement()) {
             statement.execute(sql);
