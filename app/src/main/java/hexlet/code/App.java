@@ -2,8 +2,12 @@ package hexlet.code;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
+import gg.jte.ContentType;
+import gg.jte.TemplateEngine;
+import gg.jte.resolve.ResourceCodeResolver;
 import hexlet.code.repository.BaseRepository;
 import io.javalin.Javalin;
+import io.javalin.rendering.template.JavalinJte;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.BufferedReader;
@@ -17,6 +21,13 @@ import java.util.stream.Collectors;
 
 @Slf4j
 public class App {
+    private static TemplateEngine createTemplateEngine() {
+        ClassLoader classLoader = App.class.getClassLoader();
+        ResourceCodeResolver codeResolver = new ResourceCodeResolver("templates", classLoader);
+
+        return TemplateEngine.create(codeResolver, ContentType.Html);
+    }
+
     private static int getPort() {
         String port = System.getenv().getOrDefault("PORT", "3000");
         return Integer.parseInt(port);
@@ -36,7 +47,7 @@ public class App {
     }
 
     private static void addRoutes(Javalin app) {
-        app.get("/", ctx -> ctx.result("Hello World"));
+        app.get("/", ctx -> ctx.render("index.jte"));
     }
 
     private static String readResourceFile(String fileName) throws IOException {
@@ -62,10 +73,11 @@ public class App {
 
         Javalin app = Javalin.create(config -> {
             if (!isProduction()) {
-                config.bundledPlugins.enableDevLogging();
+                config.plugins.enableDevLogging();
             }
         });
 
+        JavalinJte.init(createTemplateEngine());
         addRoutes(app);
 
         app.before(ctx -> {
