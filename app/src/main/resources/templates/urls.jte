@@ -1,0 +1,4 @@
+@template.layout.page(
+content = @`
+`
+)
