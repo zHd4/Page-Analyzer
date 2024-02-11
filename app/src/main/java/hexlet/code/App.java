@@ -15,11 +15,13 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -56,8 +58,10 @@ public class App {
     }
 
     private static String readResourceFile(String fileName) throws IOException {
-        var inputStream = App.class.getClassLoader().getResourceAsStream(fileName);
-        try (BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8))) {
+        InputStream inputStream = Objects.requireNonNull(App.class.getClassLoader().getResourceAsStream(fileName));
+        InputStreamReader streamReader = new InputStreamReader(inputStream, StandardCharsets.UTF_8);
+
+        try (BufferedReader reader = new BufferedReader(streamReader)) {
             return reader.lines().collect(Collectors.joining("\n"));
         }
     }
@@ -67,7 +71,7 @@ public class App {
         hikariConfig.setJdbcUrl(getDatabaseUrl());
 
         HikariDataSource dataSource = new HikariDataSource(hikariConfig);
-        var sql = readResourceFile("schema.sql");
+        String sql = readResourceFile("schema.sql");
 
         try (Connection connection = dataSource.getConnection();
              Statement statement = connection.createStatement()) {
@@ -85,14 +89,12 @@ public class App {
         JavalinJte.init(createTemplateEngine());
         addRoutes(app);
 
-        app.before(ctx -> {
-            ctx.attribute("ctx", ctx);
-        });
-
+        app.before(ctx -> ctx.attribute("ctx", ctx));
         return app;
     }
 
     public static void main(String[] args) throws SQLException, IOException {
-        getApp().start(getPort());
+        Javalin app = getApp();
+        app.start(getPort());
     }
 }
