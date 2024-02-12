@@ -38,9 +38,10 @@ public class UrlsRepository extends BaseRepository {
         String sql = "SELECT * FROM urls WHERE name=?";
 
         try (Connection connection = dataSource.getConnection();
-             PreparedStatement stmt = connection.prepareStatement(sql)) {
+             PreparedStatement statement = connection.prepareStatement(sql)) {
 
-            ResultSet resultSet = stmt.executeQuery();
+            statement.setString(1, name);
+            ResultSet resultSet = statement.executeQuery();
             Url foundUrl = null;
 
             if (resultSet.next()) {
@@ -59,9 +60,9 @@ public class UrlsRepository extends BaseRepository {
         String sql = "SELECT * FROM urls";
 
         try (Connection connection = dataSource.getConnection();
-             PreparedStatement stmt = connection.prepareStatement(sql)) {
+             PreparedStatement statement = connection.prepareStatement(sql)) {
 
-            ResultSet resultSet = stmt.executeQuery();
+            ResultSet resultSet = statement.executeQuery();
             List<Url> result = new ArrayList<>();
 
             while (resultSet.next()) {
