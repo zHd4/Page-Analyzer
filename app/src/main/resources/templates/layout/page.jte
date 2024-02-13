@@ -1,9 +1,7 @@
 @import gg.jte.Content
-@import hexlet.code.dto.BasePage
 @import hexlet.code.util.NamedRoutes
 
 @param Content content
-@param BasePage page = null
 
 <html lang="ru">
     <head>
@@ -34,12 +32,6 @@
                 </div>
             </div>
         </nav>
-
-        @if(page != null && page.getFlashText() != null)
-            <div class="alert alert-${page.getFlashType()}" role="alert">
-                ${page.getFlashText()}
-            </div>
-        @endif
 
         <main class="flex-grow-1">
             <section>
