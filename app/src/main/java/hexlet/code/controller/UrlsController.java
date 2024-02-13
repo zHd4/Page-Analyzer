@@ -11,6 +11,7 @@ import java.net.URISyntaxException;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
@@ -31,10 +32,19 @@ public class UrlsController {
 
         try {
             URI uri = new URI(Objects.requireNonNull(url));
-            url = String.format("%s://%s", uri.getScheme(), uri.getAuthority());
+
+            String protocol = uri.getScheme();
+            String authority = uri.getAuthority();
+
+            if (protocol == null || authority == null) {
+                throw new URISyntaxException(url, "Incorrect URL");
+            }
+
+            url = String.format("%s://%s", protocol, authority);
 
             if (UrlsRepository.findByName(url).isEmpty()) {
-                UrlsRepository.save(new Url(url, Timestamp.from(Instant.now())));
+                Timestamp now = Timestamp.from(Instant.now().truncatedTo(ChronoUnit.SECONDS));
+                UrlsRepository.save(new Url(url, now));
 
                 ctx.sessionAttribute("flash-text", "Страница успешно добавлена");
                 ctx.sessionAttribute("flash-type", "success");
