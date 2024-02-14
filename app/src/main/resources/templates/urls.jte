@@ -1,3 +1,5 @@
+@import java.time.format.DateTimeFormatter
+@import java.time.format.FormatStyle
 @import hexlet.code.dto.urls.UrlsPage
 @import hexlet.code.model.Url
 @param UrlsPage page
@@ -28,7 +30,7 @@ content = @`
                     <td>
                         <a href="/urls/${url.getId()}">${url.getName()}</a>
                     </td>
-                    <td>${url.getCreatedAt().toString()}</td>
+                    <td>${DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT).format(url.getCreatedAt().toLocalDateTime())}</td>
                 </tr>
             @endfor
             </tbody>
