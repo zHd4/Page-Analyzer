@@ -55,6 +55,7 @@ public class App {
         app.get(NamedRoutes.rootPath(), RootController::index);
         app.get(NamedRoutes.urlsPath(), UrlsController::index);
         app.post(NamedRoutes.urlsPath(), UrlsController::create);
+        app.get(NamedRoutes.urlPath(), UrlsController::show);
     }
 
     private static String readResourceFile(String fileName) throws IOException {
