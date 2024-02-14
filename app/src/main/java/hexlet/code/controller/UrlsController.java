@@ -1,10 +1,12 @@
 package hexlet.code.controller;
 
+import hexlet.code.dto.urls.UrlPage;
 import hexlet.code.dto.urls.UrlsPage;
 import hexlet.code.model.Url;
 import hexlet.code.repository.UrlsRepository;
 import hexlet.code.util.NamedRoutes;
 import io.javalin.http.Context;
+import io.javalin.http.NotFoundResponse;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -14,6 +16,7 @@ import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 public class UrlsController {
     public static void index(Context ctx) throws SQLException {
@@ -57,5 +60,19 @@ public class UrlsController {
         }
 
         ctx.redirect(NamedRoutes.urlsPath());
+    }
+
+    public static void show(Context ctx) throws SQLException {
+        long id = ctx.pathParamAsClass("id", Long.class).get();
+        Optional<Url> optionalUrl = UrlsRepository.findById(id);
+
+        if (optionalUrl.isEmpty()) {
+            throw new NotFoundResponse();
+        }
+
+        Url url = optionalUrl.get();
+        UrlPage page = new UrlPage(url);
+
+        ctx.render("urls/url.jte", Collections.singletonMap("page", page));
     }
 }
