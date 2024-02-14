@@ -1,5 +1,4 @@
-@import java.time.format.DateTimeFormatter
-@import java.time.format.FormatStyle
+@import static hexlet.code.util.FormatUtils.formatTimestamp
 @import hexlet.code.dto.urls.UrlsPage
 @import hexlet.code.model.Url
 @param UrlsPage page
@@ -20,7 +19,7 @@ content = @`
             <tr>
                 <th class="col-1">ID</th>
                 <th>Имя</th>
-                <th class="col-2">Последняя проверка</th>
+                <th class="col-2">Дата создания</th>
             </tr>
             </thead>
             <tbody>
@@ -30,7 +29,7 @@ content = @`
                     <td>
                         <a href="/urls/${url.getId()}">${url.getName()}</a>
                     </td>
-                    <td>${DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT).format(url.getCreatedAt().toLocalDateTime())}</td>
+                    <td>${formatTimestamp(url.getCreatedAt())}</td>
                 </tr>
             @endfor
             </tbody>

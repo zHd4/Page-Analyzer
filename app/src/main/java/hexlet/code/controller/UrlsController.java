@@ -23,7 +23,7 @@ public class UrlsController {
         page.setFlashText(ctx.consumeSessionAttribute("flash-text"));
         page.setFlashType(ctx.consumeSessionAttribute("flash-type"));
 
-        ctx.render("urls.jte", Collections.singletonMap("page", page));
+        ctx.render("urls/index.jte", Collections.singletonMap("page", page));
     }
 
     public static void create(Context ctx) throws SQLException {
