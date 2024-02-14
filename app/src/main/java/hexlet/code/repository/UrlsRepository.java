@@ -16,7 +16,7 @@ public class UrlsRepository extends BaseRepository {
     public static void save(Url url) throws SQLException {
         String sql = "INSERT INTO urls (name, created_at) VALUES (?, ?)";
 
-        try (Connection connection = dataSource.getConnection()) {
+        try (Connection connection = getDataSource().getConnection()) {
             try (PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
                 statement.setString(1, url.getName());
                 statement.setTimestamp(2, url.getCreatedAt());
@@ -37,7 +37,7 @@ public class UrlsRepository extends BaseRepository {
     public static Optional<Url> findById(long id) throws SQLException {
         String sql = "SELECT * FROM urls WHERE id=?";
 
-        try (Connection connection = dataSource.getConnection();
+        try (Connection connection = getDataSource().getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
 
             statement.setLong(1, id);
@@ -59,7 +59,7 @@ public class UrlsRepository extends BaseRepository {
     public static Optional<Url> findByName(String name) throws SQLException {
         String sql = "SELECT * FROM urls WHERE name=?";
 
-        try (Connection connection = dataSource.getConnection();
+        try (Connection connection = getDataSource().getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
 
             statement.setString(1, name);
@@ -81,7 +81,7 @@ public class UrlsRepository extends BaseRepository {
     public static List<Url> getEntities() throws SQLException {
         String sql = "SELECT * FROM urls";
 
-        try (Connection connection = dataSource.getConnection();
+        try (Connection connection = getDataSource().getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
 
             ResultSet resultSet = statement.executeQuery();

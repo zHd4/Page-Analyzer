@@ -79,7 +79,7 @@ public class App {
             statement.execute(sql);
         }
 
-        BaseRepository.dataSource = dataSource;
+        BaseRepository.setDataSource(dataSource);
 
         Javalin app = Javalin.create(config -> {
             if (!isProduction()) {
