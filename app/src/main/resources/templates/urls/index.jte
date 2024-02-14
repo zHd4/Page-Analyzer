@@ -19,7 +19,7 @@ content = @`
             <tr>
                 <th class="col-1">ID</th>
                 <th>Имя</th>
-                <th class="col-2">Дата создания</th>
+                <th class="col-2">Дата добавления</th>
             </tr>
             </thead>
             <tbody>

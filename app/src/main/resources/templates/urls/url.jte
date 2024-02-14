@@ -18,7 +18,7 @@ content = @`
                 <td>${page.getUrl().getName()}</td>
             </tr>
             <tr>
-                <td>Дата создания</td>
+                <td>Дата добавления</td>
                 <td>${formatTimestamp(page.getUrl().getCreatedAt())}</td>
             </tr>
             </tbody>
