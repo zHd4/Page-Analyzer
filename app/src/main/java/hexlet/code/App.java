@@ -13,16 +13,10 @@ import io.javalin.Javalin;
 import io.javalin.rendering.template.JavalinJte;
 import lombok.extern.slf4j.Slf4j;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.nio.charset.StandardCharsets;
-import java.sql.Connection;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.Objects;
-import java.util.stream.Collectors;
+
+import static hexlet.code.util.Resources.readResourceFile;
 
 @Slf4j
 public class App {
@@ -58,15 +52,6 @@ public class App {
         app.get(NamedRoutes.urlPath(), UrlsController::show);
     }
 
-    private static String readResourceFile(String fileName) throws IOException {
-        InputStream inputStream = Objects.requireNonNull(App.class.getClassLoader().getResourceAsStream(fileName));
-        InputStreamReader streamReader = new InputStreamReader(inputStream, StandardCharsets.UTF_8);
-
-        try (BufferedReader reader = new BufferedReader(streamReader)) {
-            return reader.lines().collect(Collectors.joining("\n"));
-        }
-    }
-
     public static Javalin getApp() throws IOException, SQLException {
         HikariConfig hikariConfig = new HikariConfig();
         hikariConfig.setJdbcUrl(getDatabaseUrl());
@@ -74,12 +59,8 @@ public class App {
         HikariDataSource dataSource = new HikariDataSource(hikariConfig);
         String sql = readResourceFile("schema.sql");
 
-        try (Connection connection = dataSource.getConnection();
-             Statement statement = connection.createStatement()) {
-            statement.execute(sql);
-        }
-
         BaseRepository.setDataSource(dataSource);
+        BaseRepository.runScript(sql);
 
         Javalin app = Javalin.create(config -> {
             if (!isProduction()) {
