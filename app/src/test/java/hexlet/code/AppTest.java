@@ -1,5 +1,7 @@
 package hexlet.code;
 
+import hexlet.code.model.Url;
+import hexlet.code.repository.UrlsRepository;
 import hexlet.code.util.Resources;
 import io.javalin.Javalin;
 import kong.unirest.HttpResponse;
@@ -12,9 +14,10 @@ import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.Optional;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static hexlet.code.repository.BaseRepository.runScript;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public final class AppTest {
     private static final int PORT = 0;
@@ -53,8 +56,20 @@ public final class AppTest {
     }
 
     @Test
-    void testAdding() {
+    void testAdding() throws SQLException {
+        String url = "https://www.facebook.com:443/login";
+        String expected = "https://www.facebook.com:443";
 
+        Unirest.post(baseUrl + "/urls").field("url", url).asEmpty();
+        Optional<Url> actual = UrlsRepository.findByName(expected);
+
+        assertThat(actual.isEmpty()).isFalse();
+        assertThat(actual.get().getName()).isEqualTo(expected);
+
+        HttpResponse<String> response = Unirest.get(baseUrl + "/urls").asString();
+
+        assertThat(response.getStatus()).isEqualTo(HttpStatus.OK);
+        assertThat(response.getBody()).contains(expected);
     }
 
     @Test
