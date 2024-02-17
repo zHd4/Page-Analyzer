@@ -16,7 +16,7 @@ import java.sql.SQLException;
 import static org.assertj.core.api.Assertions.assertThat;
 import static hexlet.code.repository.BaseRepository.runScript;
 
-public class AppTest {
+public final class AppTest {
     private static final int PORT = 0;
     private static Javalin app;
     private static String baseUrl;
