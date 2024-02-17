@@ -5,6 +5,7 @@ import hexlet.code.dto.urls.UrlsPage;
 import hexlet.code.model.Url;
 import hexlet.code.repository.UrlsRepository;
 import hexlet.code.util.NamedRoutes;
+import hexlet.code.util.UrlUtils;
 import io.javalin.http.Context;
 import io.javalin.http.NotFoundResponse;
 
@@ -30,19 +31,10 @@ public class UrlsController {
     }
 
     public static void create(Context ctx) throws SQLException {
-        String url = ctx.formParam("url");
+
 
         try {
-            URI uri = new URI(Objects.requireNonNull(url));
-
-            String protocol = uri.getScheme();
-            String authority = uri.getAuthority();
-
-            if (protocol == null || authority == null) {
-                throw new URISyntaxException(url, "Incorrect URL");
-            }
-
-            url = String.format("%s://%s", protocol, authority);
+            String url = UrlUtils.parseUrl(ctx.formParam("url"));
 
             if (UrlsRepository.findByName(url).isEmpty()) {
                 Timestamp now = Timestamp.valueOf(LocalDateTime.now());
