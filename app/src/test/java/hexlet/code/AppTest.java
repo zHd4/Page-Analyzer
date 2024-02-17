@@ -2,13 +2,11 @@ package hexlet.code;
 
 import hexlet.code.model.Url;
 import hexlet.code.repository.UrlsRepository;
-import hexlet.code.util.Resources;
 import io.javalin.Javalin;
 import kong.unirest.HttpResponse;
 import kong.unirest.HttpStatus;
 import kong.unirest.Unirest;
 import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -16,7 +14,6 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Optional;
 
-import static hexlet.code.repository.BaseRepository.runScript;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public final class AppTest {
@@ -37,12 +34,6 @@ public final class AppTest {
         app.stop();
     }
 
-    @AfterEach
-    void afterEach() throws IOException, SQLException {
-        runScript(getSqlScript("truncate.sql"));
-        runScript(getSqlScript("seed.sql"));
-    }
-
     @Test
     void indexTest() {
         HttpResponse<String> response = Unirest.get(baseUrl).asString();
@@ -60,7 +51,7 @@ public final class AppTest {
         String url = "https://www.facebook.com:443/login";
         String expected = "https://www.facebook.com:443";
 
-        Unirest.post(baseUrl + "/urls").field("url", url).asEmpty();
+        Unirest.post(baseUrl + "/urls").field("url", url).asString();
         Optional<Url> actual = UrlsRepository.findByName(expected);
 
         assertThat(actual.isEmpty()).isFalse();
@@ -75,9 +66,5 @@ public final class AppTest {
     @Test
     void testShowing() {
 
-    }
-
-    private static String getSqlScript(String resourceName) throws IOException {
-        return Resources.readResourceFile(resourceName);
     }
 }
