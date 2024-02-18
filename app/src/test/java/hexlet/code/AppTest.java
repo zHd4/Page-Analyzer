@@ -1,7 +1,6 @@
 package hexlet.code;
 
 import hexlet.code.model.Url;
-import hexlet.code.repository.BaseRepository;
 import hexlet.code.repository.UrlsRepository;
 import io.javalin.Javalin;
 import kong.unirest.HttpResponse;
@@ -18,6 +17,8 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static hexlet.code.util.FormatUtils.formatTimestamp;
+import static hexlet.code.util.Resources.readResourceFile;
+import static hexlet.code.repository.BaseRepository.runScript;
 
 public final class AppTest {
     private static final int PORT = 0;
@@ -38,20 +39,9 @@ public final class AppTest {
     }
 
     @AfterEach
-    void afterEach() throws SQLException {
-        BaseRepository.runScript("DELETE FROM urls;");
-        BaseRepository.runScript("ALTER TABLE urls ALTER COLUMN id RESTART WITH 4;");
-
-        BaseRepository.runScript("""
-                INSERT INTO urls (id, name, created_at)
-                VALUES (1, 'https://github.com', '2024-02-17 00:40:12.491151');
-
-                INSERT INTO urls (id, name, created_at)
-                VALUES (2, 'https://google.com', '2024-02-17 00:41:06.273015');
-
-                INSERT INTO urls (id, name, created_at)
-                VALUES (3, 'https://microsoft.com', '2024-02-17 00:41:51.817112');""");
-
+    void afterEach() throws SQLException, IOException {
+        runScript(readResourceFile("truncate.sql"));
+        runScript(readResourceFile("seed.sql"));
     }
 
     @Test
