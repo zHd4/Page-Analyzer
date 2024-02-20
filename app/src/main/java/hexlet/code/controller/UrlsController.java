@@ -57,7 +57,7 @@ public class UrlsController {
         Optional<Url> optionalUrl = UrlsRepository.findById(id);
 
         if (optionalUrl.isEmpty()) {
-            throw new NotFoundResponse();
+            throw new NotFoundResponse("Страница с id=" + id +" не найдена");
         }
 
         Url url = optionalUrl.get();
@@ -74,7 +74,7 @@ public class UrlsController {
         Optional<Url> optionalUrl = UrlsRepository.findById(urlId);
 
         if (optionalUrl.isEmpty()) {
-            throw new NotFoundResponse();
+            throw new NotFoundResponse("Страница с id=" + urlId +" не найдена");
         }
 
         Url url = optionalUrl.get();
