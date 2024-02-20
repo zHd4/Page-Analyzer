@@ -50,6 +50,7 @@ public class App {
         app.get(NamedRoutes.urlsPath(), UrlsController::index);
         app.post(NamedRoutes.urlsPath(), UrlsController::create);
         app.get(NamedRoutes.urlPath(), UrlsController::show);
+        app.post(NamedRoutes.urlChecksPath(), UrlsController::createUrlCheck);
     }
 
     public static Javalin getApp() throws IOException, SQLException {
