@@ -18,9 +18,11 @@ content = @`
         <table class="table table-bordered table-hover mt-3">
             <thead>
             <tr>
-                <th class="col-1">ID</th>
+                <th>ID</th>
                 <th>Имя</th>
-                <th class="col-2">Дата добавления</th>
+                <th>Дата добавления</th>
+                <th>Последняя проверка</th>
+                <th>Код ответа</th>
             </tr>
             </thead>
             <tbody>
@@ -31,6 +33,16 @@ content = @`
                         <a href="${NamedRoutes.urlPath(url.getId())}">${url.getName()}</a>
                     </td>
                     <td>${formatTimestamp(url.getCreatedAt())}</td>
+
+                    <td>
+                        ${url.getChecks() != null && !url.getChecks().isEmpty() ?
+                            formatTimestamp(url.getChecks().get(url.getChecks().size() - 1).getCreatedAt()) : ""}
+                    </td>
+
+                    <td>
+                        ${url.getChecks() != null && !url.getChecks().isEmpty() ?
+                            String.valueOf(url.getChecks().get(url.getChecks().size() - 1).getStatusCode()) : ""}
+                    </td>
                 </tr>
             @endfor
             </tbody>
