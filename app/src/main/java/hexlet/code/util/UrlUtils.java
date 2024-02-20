@@ -1,7 +1,17 @@
 package hexlet.code.util;
 
+import hexlet.code.model.Url;
+import hexlet.code.model.UrlCheck;
+import kong.unirest.HttpResponse;
+import kong.unirest.Unirest;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 public final class UrlUtils {
@@ -16,5 +26,23 @@ public final class UrlUtils {
         }
 
         return String.format("%s://%s", protocol, authority);
+    }
+
+    public static UrlCheck checkUrl(Url url) {
+        HttpResponse<String> response = Unirest.get(url.getName()).asString();
+
+        Document document = Jsoup.parse(response.getBody());
+        Timestamp now = Timestamp.valueOf(LocalDateTime.now());
+
+        int status = response.getStatus();
+        String title = document.title();
+
+        Element h1Element = document.selectFirst("h1");
+        String h1 = h1Element != null ? h1Element.text() : "";
+
+        Element descriptionElement = document.selectFirst("meta[name=description]");
+        String description = descriptionElement != null ? descriptionElement.text() : "";
+
+        return new UrlCheck(status, title, h1, description, url.getId(), now);
     }
 }
