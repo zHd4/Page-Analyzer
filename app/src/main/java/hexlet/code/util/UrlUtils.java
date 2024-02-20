@@ -21,9 +21,9 @@ public final class UrlUtils {
         String protocol = uri.getScheme();
         String authority = uri.getAuthority();
 
-        if (protocol == null ||
-                authority == null ||
-                (!protocol.equals("http") && !protocol.equals("https"))) {
+        if (protocol == null
+                || authority == null
+                || (!protocol.equals("http") && !protocol.equals("https"))) {
             throw new URISyntaxException(url, "Incorrect URL");
         }
 
