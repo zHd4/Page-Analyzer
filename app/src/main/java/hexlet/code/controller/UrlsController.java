@@ -3,6 +3,8 @@ package hexlet.code.controller;
 import hexlet.code.dto.urls.UrlPage;
 import hexlet.code.dto.urls.UrlsPage;
 import hexlet.code.model.Url;
+import hexlet.code.model.UrlCheck;
+import hexlet.code.repository.UrlsChecksRepository;
 import hexlet.code.repository.UrlsRepository;
 import hexlet.code.util.NamedRoutes;
 import hexlet.code.util.UrlUtils;
@@ -29,8 +31,6 @@ public class UrlsController {
     }
 
     public static void create(Context ctx) throws SQLException {
-
-
         try {
             String url = UrlUtils.parseUrl(ctx.formParam("url"));
 
@@ -61,8 +61,26 @@ public class UrlsController {
         }
 
         Url url = optionalUrl.get();
-        UrlPage page = new UrlPage(url);
 
+        List<UrlCheck> urlChecks = UrlsChecksRepository.findByUrlId(url.getId());
+        url.setChecks(urlChecks);
+
+        UrlPage page = new UrlPage(url);
         ctx.render("urls/url.jte", Collections.singletonMap("page", page));
+    }
+
+    public static void createUrlCheck(Context ctx) throws SQLException {
+        long urlId = ctx.pathParamAsClass("id", Long.class).get();
+        Optional<Url> optionalUrl = UrlsRepository.findById(urlId);
+
+        if (optionalUrl.isEmpty()) {
+            throw new NotFoundResponse();
+        }
+
+        Url url = optionalUrl.get();
+        UrlCheck urlCheck = UrlUtils.checkUrl(url);
+
+        UrlsChecksRepository.save(urlCheck);
+        ctx.redirect(NamedRoutes.urlPath(urlId));
     }
 }
