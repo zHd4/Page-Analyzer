@@ -1,6 +1,7 @@
 package hexlet.code.repository;
 
 import hexlet.code.model.Url;
+import hexlet.code.model.UrlCheck;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -94,8 +95,11 @@ public class UrlsRepository extends BaseRepository {
                 Timestamp createdAt = resultSet.getTimestamp("created_at");
 
                 Url url = new Url(name, createdAt);
+                List<UrlCheck> urlChecks = UrlsChecksRepository.findByUrlId(id);
 
                 url.setId(id);
+                url.setChecks(urlChecks);
+
                 result.add(url);
             }
 
