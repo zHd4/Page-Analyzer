@@ -1,6 +1,7 @@
 @import static hexlet.code.util.FormatUtils.formatTimestamp
 @import hexlet.code.dto.urls.UrlsPage
 @import hexlet.code.model.Url
+@import hexlet.code.util.NamedRoutes
 @param UrlsPage page
 
 @template.layout.page(
@@ -27,7 +28,7 @@ content = @`
                 <tr>
                     <td>${url.getId()}</td>
                     <td>
-                        <a href="/urls/${url.getId()}">${url.getName()}</a>
+                        <a href="${NamedRoutes.urlPath(url.getId())}">${url.getName()}</a>
                     </td>
                     <td>${formatTimestamp(url.getCreatedAt())}</td>
                 </tr>
