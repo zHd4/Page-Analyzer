@@ -33,13 +33,15 @@ content = @`
 
         <table class="table table-bordered table-hover mt-3">
             <thead>
-            <tr><th class="col-1">ID</th>
-                <th class="col-1">Код ответа</th>
-                <th>title</th>
-                <th>h1</th>
-                <th>description</th>
-                <th class="col-2">Дата проверки</th>
-            </tr></thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Код ответа</th>
+                    <th>title</th>
+                    <th>h1</th>
+                    <th>description</th>
+                    <th>Дата проверки</th>
+                </tr>
+            </thead>
             <tbody>
             @if(page.getUrl().getChecks() != null && !page.getUrl().getChecks().isEmpty())
                 @for(UrlCheck check : page.getUrl().getChecks())
