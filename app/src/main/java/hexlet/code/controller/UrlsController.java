@@ -10,6 +10,7 @@ import hexlet.code.util.NamedRoutes;
 import hexlet.code.util.UrlUtils;
 import io.javalin.http.Context;
 import io.javalin.http.NotFoundResponse;
+import kong.unirest.UnirestException;
 
 import java.net.URISyntaxException;
 import java.sql.SQLException;
@@ -66,6 +67,10 @@ public class UrlsController {
         url.setChecks(urlChecks);
 
         UrlPage page = new UrlPage(url);
+
+        page.setFlashText(ctx.consumeSessionAttribute("flash-text"));
+        page.setFlashType(ctx.consumeSessionAttribute("flash-type"));
+
         ctx.render("urls/url.jte", Collections.singletonMap("page", page));
     }
 
@@ -78,9 +83,18 @@ public class UrlsController {
         }
 
         Url url = optionalUrl.get();
-        UrlCheck urlCheck = UrlUtils.checkUrl(url);
 
-        UrlsChecksRepository.save(urlCheck);
+        try {
+            UrlCheck urlCheck = UrlUtils.checkUrl(url);
+            UrlsChecksRepository.save(urlCheck);
+
+            ctx.sessionAttribute("flash-text", "Страница успешно проверена");
+            ctx.sessionAttribute("flash-type", "success");
+        } catch (UnirestException e) {
+            ctx.sessionAttribute("flash-text", "Некорректный URL");
+            ctx.sessionAttribute("flash-type", "danger");
+        }
+
         ctx.redirect(NamedRoutes.urlPath(urlId));
     }
 }
