@@ -1,11 +1,16 @@
 package hexlet.code;
 
 import hexlet.code.model.Url;
+import hexlet.code.model.UrlCheck;
+import hexlet.code.repository.UrlsChecksRepository;
 import hexlet.code.repository.UrlsRepository;
+import hexlet.code.util.NamedRoutes;
 import io.javalin.Javalin;
 import kong.unirest.HttpResponse;
 import kong.unirest.HttpStatus;
 import kong.unirest.Unirest;
+import okhttp3.mockwebserver.MockResponse;
+import okhttp3.mockwebserver.MockWebServer;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
@@ -13,6 +18,7 @@ import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -24,6 +30,7 @@ public final class AppTest {
     private static final int PORT = 0;
     private static Javalin app;
     private static String baseUrl;
+    private static MockWebServer mockServer;
 
     @BeforeAll
     public static void beforeAll() throws SQLException, IOException {
@@ -31,11 +38,19 @@ public final class AppTest {
         app.start(PORT);
 
         baseUrl = "http://localhost:" + app.port();
+        mockServer = new MockWebServer();
+
+        String testBody = readResourceFile("fixtures/index.html");
+        MockResponse mockResponse = new MockResponse().setBody(testBody);
+
+        mockServer.enqueue(mockResponse);
+        mockServer.start();
     }
 
     @AfterAll
-    public static void afterAll() {
+    public static void afterAll() throws IOException {
         app.stop();
+        mockServer.shutdown();
     }
 
     @AfterEach
@@ -46,13 +61,13 @@ public final class AppTest {
 
     @Test
     void indexTest() {
-        HttpResponse<String> response = Unirest.get(baseUrl).asString();
+        HttpResponse<String> response = Unirest.get(baseUrl + NamedRoutes.rootPath()).asString();
         assertThat(response.getStatus()).isEqualTo(HttpStatus.OK);
     }
 
     @Test
     void urlIndexTest() {
-        HttpResponse<String> response = Unirest.get(baseUrl + "/urls").asString();
+        HttpResponse<String> response = Unirest.get(baseUrl + NamedRoutes.urlsPath()).asString();
         assertThat(response.getStatus()).isEqualTo(HttpStatus.OK);
     }
 
@@ -61,7 +76,7 @@ public final class AppTest {
         String url = "https://www.facebook.com:443/login";
         String expected = "https://www.facebook.com:443";
 
-        Unirest.post(baseUrl + "/urls").field("url", url).asString();
+        Unirest.post(baseUrl + "/urls").field("url", url).asEmpty();
         Optional<Url> actual = UrlsRepository.findByName(expected);
 
         assertThat(actual.isEmpty()).isFalse();
@@ -87,5 +102,29 @@ public final class AppTest {
         assertThat(body).contains(String.format("<td>%s</td>", url.getId()));
         assertThat(body).contains(String.format("<td>%s</td>", url.getName()));
         assertThat(body).contains(String.format("<td>%s</td>", formatTimestamp(url.getCreatedAt())));
+    }
+
+    @Test
+    void testChecking() throws SQLException {
+        String url = mockServer.url("/").toString();
+        Unirest.post(baseUrl + NamedRoutes.urlsPath()).field("url", url).asEmpty();
+
+        Optional<Url> actualOptionalUrl = UrlsRepository.findByName(url);
+
+        assertThat(actualOptionalUrl.isEmpty()).isFalse();
+        assertThat(actualOptionalUrl.get().getName()).isEqualTo(url);
+
+        Url actualUrl = actualOptionalUrl.get();
+        Unirest.post(baseUrl + NamedRoutes.urlChecksPath(actualUrl.getId())).asEmpty();
+
+        List<UrlCheck> actualChecks = UrlsChecksRepository.findByUrlId(actualUrl.getId());
+        assertThat(actualChecks.isEmpty()).isFalse();
+
+        UrlCheck actualCheck = actualChecks.get(0);
+
+        assertThat(actualCheck.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(actualCheck.getTitle()).isEqualTo("Test title");
+        assertThat(actualCheck.getH1()).isEqualTo("test h1");
+        assertThat(actualCheck.getDescription()).isEqualTo("test description");
     }
 }
