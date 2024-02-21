@@ -106,7 +106,7 @@ public final class AppTest {
 
     @Test
     void testChecking() throws SQLException {
-        String url = mockServer.url("/").toString();
+        String url = mockServer.url("/").toString().replaceAll("/$", "");
         Unirest.post(baseUrl + NamedRoutes.urlsPath()).field("url", url).asEmpty();
 
         Optional<Url> actualOptionalUrl = UrlsRepository.findByName(url);
