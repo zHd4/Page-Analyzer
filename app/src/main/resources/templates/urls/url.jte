@@ -6,6 +6,12 @@
 
 @template.layout.page(
 content = @`
+    @if(page != null && page.getFlashText() != null)
+        <div class="alert alert-${page.getFlashType()}" role="alert">
+            ${page.getFlashText()}
+        </div>
+    @endif
+
     <div class="container-lg mt-5">
         <h1>${page.getUrl().getName()}</h1>
 
