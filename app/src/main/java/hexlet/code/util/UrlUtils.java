@@ -43,7 +43,7 @@ public final class UrlUtils {
         String h1 = h1Element != null ? h1Element.text() : "";
 
         Element descriptionElement = document.selectFirst("meta[name=description]");
-        String description = descriptionElement != null ? descriptionElement.text() : "";
+        String description = descriptionElement != null ? descriptionElement.attr("content") : "";
 
         return new UrlCheck(status, title, h1, description, url.getId(), now);
     }
