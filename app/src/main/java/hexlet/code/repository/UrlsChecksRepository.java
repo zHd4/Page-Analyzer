@@ -13,7 +13,7 @@ import java.util.List;
 
 public class UrlsChecksRepository extends BaseRepository {
     public static void save(UrlCheck urlCheck) throws SQLException {
-        String sql = "INSERT INTO urls_checks (status_code, title, h1, description, url_id, created_at)"
+        String sql = "INSERT INTO url_checks (status_code, title, h1, description, url_id, created_at)"
                 + " VALUES (?, ?, ?, ?, ?, ?)";
 
         try (Connection connection = getDataSource().getConnection()) {
@@ -39,7 +39,7 @@ public class UrlsChecksRepository extends BaseRepository {
     }
 
     public static List<UrlCheck> findByUrlId(long urlId) throws SQLException {
-        String sql = "SELECT * FROM urls_checks WHERE url_id=?";
+        String sql = "SELECT * FROM url_checks WHERE url_id=?";
 
         try (Connection connection = getDataSource().getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
