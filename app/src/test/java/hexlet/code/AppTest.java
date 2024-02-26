@@ -2,7 +2,7 @@ package hexlet.code;
 
 import hexlet.code.model.Url;
 import hexlet.code.model.UrlCheck;
-import hexlet.code.repository.UrlsChecksRepository;
+import hexlet.code.repository.UrlChecksRepository;
 import hexlet.code.repository.UrlsRepository;
 import hexlet.code.util.NamedRoutes;
 import io.javalin.Javalin;
@@ -117,7 +117,7 @@ public final class AppTest {
         Url actualUrl = actualOptionalUrl.get();
         Unirest.post(baseUrl + NamedRoutes.urlChecksPath(actualUrl.getId())).asEmpty();
 
-        List<UrlCheck> actualChecks = UrlsChecksRepository.findByUrlId(actualUrl.getId());
+        List<UrlCheck> actualChecks = UrlChecksRepository.findByUrlId(actualUrl.getId());
         assertThat(actualChecks.isEmpty()).isFalse();
 
         UrlCheck actualCheck = actualChecks.get(0);

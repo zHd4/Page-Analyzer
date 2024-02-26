@@ -95,7 +95,7 @@ public class UrlsRepository extends BaseRepository {
                 Timestamp createdAt = resultSet.getTimestamp("created_at");
 
                 Url url = new Url(name, createdAt);
-                List<UrlCheck> urlChecks = UrlsChecksRepository.findByUrlId(id);
+                List<UrlCheck> urlChecks = UrlChecksRepository.findByUrlId(id);
 
                 url.setId(id);
                 url.setChecks(urlChecks);

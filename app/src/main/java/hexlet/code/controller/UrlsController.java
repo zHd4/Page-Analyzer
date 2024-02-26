@@ -4,7 +4,7 @@ import hexlet.code.dto.urls.UrlPage;
 import hexlet.code.dto.urls.UrlsPage;
 import hexlet.code.model.Url;
 import hexlet.code.model.UrlCheck;
-import hexlet.code.repository.UrlsChecksRepository;
+import hexlet.code.repository.UrlChecksRepository;
 import hexlet.code.repository.UrlsRepository;
 import hexlet.code.util.NamedRoutes;
 import hexlet.code.util.UrlUtils;
@@ -63,7 +63,7 @@ public class UrlsController {
 
         Url url = optionalUrl.get();
 
-        List<UrlCheck> urlChecks = UrlsChecksRepository.findByUrlId(url.getId());
+        List<UrlCheck> urlChecks = UrlChecksRepository.findByUrlId(url.getId());
         url.setChecks(urlChecks);
 
         UrlPage page = new UrlPage(url);
@@ -86,7 +86,7 @@ public class UrlsController {
 
         try {
             UrlCheck urlCheck = UrlUtils.checkUrl(url);
-            UrlsChecksRepository.save(urlCheck);
+            UrlChecksRepository.save(urlCheck);
 
             ctx.sessionAttribute("flash-text", "Страница успешно проверена");
             ctx.sessionAttribute("flash-type", "success");

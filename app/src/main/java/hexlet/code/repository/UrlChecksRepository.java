@@ -11,7 +11,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UrlsChecksRepository extends BaseRepository {
+public class UrlChecksRepository extends BaseRepository {
     public static void save(UrlCheck urlCheck) throws SQLException {
         String sql = "INSERT INTO url_checks (status_code, title, h1, description, url_id, created_at)"
                 + " VALUES (?, ?, ?, ?, ?, ?)";
