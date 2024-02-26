@@ -9,6 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -19,8 +20,10 @@ public class UrlsRepository extends BaseRepository {
 
         try (Connection connection = getDataSource().getConnection()) {
             try (PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+                Timestamp now = Timestamp.valueOf(LocalDateTime.now());
+
                 statement.setString(1, url.getName());
-                statement.setTimestamp(2, url.getCreatedAt());
+                statement.setTimestamp(2, now);
 
                 statement.executeUpdate();
 
@@ -28,6 +31,7 @@ public class UrlsRepository extends BaseRepository {
 
                 if (keys.next()) {
                     url.setId(keys.getLong(1));
+                    url.setCreatedAt(now);
                 } else {
                     throw new SQLException("DB have not returned an id after saving an entity");
                 }
@@ -49,8 +53,10 @@ public class UrlsRepository extends BaseRepository {
                 String name = resultSet.getString("name");
                 Timestamp createdAt = resultSet.getTimestamp("created_at");
 
-                foundUrl = new Url(name, createdAt);
+                foundUrl = new Url(name);
+
                 foundUrl.setId(id);
+                foundUrl.setCreatedAt(createdAt);
             }
 
             return Optional.ofNullable(foundUrl);
@@ -71,8 +77,10 @@ public class UrlsRepository extends BaseRepository {
                 long id = resultSet.getLong("id");
                 Timestamp createdAt = resultSet.getTimestamp("created_at");
 
-                foundUrl = new Url(name, createdAt);
+                foundUrl = new Url(name);
+
                 foundUrl.setId(id);
+                foundUrl.setCreatedAt(createdAt);
             }
 
             return Optional.ofNullable(foundUrl);
@@ -94,10 +102,11 @@ public class UrlsRepository extends BaseRepository {
                 String name = resultSet.getString("name");
                 Timestamp createdAt = resultSet.getTimestamp("created_at");
 
-                Url url = new Url(name, createdAt);
+                Url url = new Url(name);
                 List<UrlCheck> urlChecks = UrlChecksRepository.findByUrlId(id);
 
                 url.setId(id);
+                url.setCreatedAt(createdAt);
                 url.setChecks(urlChecks);
 
                 result.add(url);

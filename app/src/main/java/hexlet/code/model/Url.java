@@ -10,15 +10,15 @@ import java.util.List;
 public class Url {
     @Setter
     private Long id;
-
     private final String name;
-    private final Timestamp createdAt;
+
+    @Setter
+    private Timestamp createdAt;
 
     @Setter
     private List<UrlCheck> checks;
 
-    public Url(String name, Timestamp createdAt) {
+    public Url(String name) {
         this.name = name;
-        this.createdAt = createdAt;
     }
 }

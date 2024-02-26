@@ -8,6 +8,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,12 +19,14 @@ public class UrlChecksRepository extends BaseRepository {
 
         try (Connection connection = getDataSource().getConnection()) {
             try (PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+                Timestamp now = Timestamp.valueOf(LocalDateTime.now());
+
                 statement.setInt(1, urlCheck.getStatusCode());
                 statement.setString(2, urlCheck.getTitle());
                 statement.setString(3, urlCheck.getH1());
                 statement.setString(4, urlCheck.getDescription());
                 statement.setLong(5, urlCheck.getUrlId());
-                statement.setTimestamp(6, urlCheck.getCreatedAt());
+                statement.setTimestamp(6, now);
 
                 statement.executeUpdate();
 
@@ -31,6 +34,7 @@ public class UrlChecksRepository extends BaseRepository {
 
                 if (keys.next()) {
                     urlCheck.setId(keys.getLong(1));
+                    urlCheck.setCreatedAt(now);
                 } else {
                     throw new SQLException("DB have not returned an id after saving an entity");
                 }
@@ -59,9 +63,11 @@ public class UrlChecksRepository extends BaseRepository {
                 String description = resultSet.getString("description");
 
                 Timestamp createdAt = resultSet.getTimestamp("created_at");
-                UrlCheck urlCheck = new UrlCheck(statusCode, title, h1, description, urlId, createdAt);
+                UrlCheck urlCheck = new UrlCheck(statusCode, title, h1, description, urlId);
 
                 urlCheck.setId(id);
+                urlCheck.setCreatedAt(createdAt);
+
                 result.add(urlCheck);
             }
 

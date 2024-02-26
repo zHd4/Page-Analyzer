@@ -14,8 +14,6 @@ import kong.unirest.UnirestException;
 
 import java.net.URISyntaxException;
 import java.sql.SQLException;
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -36,8 +34,7 @@ public class UrlsController {
             String url = UrlUtils.parseUrl(ctx.formParam("url"));
 
             if (UrlsRepository.findByName(url).isEmpty()) {
-                Timestamp now = Timestamp.valueOf(LocalDateTime.now());
-                UrlsRepository.save(new Url(url, now));
+                UrlsRepository.save(new Url(url));
 
                 ctx.sessionAttribute("flash-text", "Страница успешно добавлена");
                 ctx.sessionAttribute("flash-type", "success");
