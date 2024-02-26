@@ -16,12 +16,19 @@ import java.net.URISyntaxException;
 import java.sql.SQLException;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class UrlsController {
     public static void index(Context ctx) throws SQLException {
         List<Url> urls = UrlsRepository.getEntities();
-        UrlsPage page = new UrlsPage(urls);
+
+        Map<Long, UrlCheck> latestChecks = urls.stream()
+                .filter(url -> !url.getChecks().isEmpty())
+                .collect(Collectors.toMap(Url::getId, url -> url.getChecks().get(url.getChecks().size() - 1)));
+
+        UrlsPage page = new UrlsPage(urls, latestChecks);
 
         page.setFlashText(ctx.consumeSessionAttribute("flash-text"));
         page.setFlashType(ctx.consumeSessionAttribute("flash-type"));
@@ -63,7 +70,7 @@ public class UrlsController {
         List<UrlCheck> urlChecks = UrlChecksRepository.findByUrlId(url.getId());
         url.setChecks(urlChecks);
 
-        UrlPage page = new UrlPage(url);
+        UrlPage page = new UrlPage(url, urlChecks);
 
         page.setFlashText(ctx.consumeSessionAttribute("flash-text"));
         page.setFlashType(ctx.consumeSessionAttribute("flash-type"));

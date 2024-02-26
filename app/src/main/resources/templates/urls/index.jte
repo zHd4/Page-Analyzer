@@ -35,13 +35,13 @@ content = @`
                     <td>${formatTimestamp(url.getCreatedAt())}</td>
 
                     <td>
-                        ${url.getChecks() != null && !url.getChecks().isEmpty() ?
-                            formatTimestamp(url.getChecks().get(url.getChecks().size() - 1).getCreatedAt()) : ""}
+                        ${page.getLatestChecks().containsKey(url.getId()) ?
+                            formatTimestamp(page.getLatestChecks().get(url.getId()).getCreatedAt()) : ""}
                     </td>
 
                     <td>
-                        ${url.getChecks() != null && !url.getChecks().isEmpty() ?
-                            String.valueOf(url.getChecks().get(url.getChecks().size() - 1).getStatusCode()) : ""}
+                        ${page.getLatestChecks().containsKey(url.getId()) ?
+                            String.valueOf(page.getLatestChecks().get(url.getId()).getStatusCode()) : ""}
                     </td>
                 </tr>
             @endfor
