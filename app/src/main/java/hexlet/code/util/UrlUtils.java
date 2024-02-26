@@ -32,9 +32,7 @@ public final class UrlUtils {
 
     public static UrlCheck checkUrl(Url url) {
         HttpResponse<String> response = Unirest.get(url.getName()).asString();
-
         Document document = Jsoup.parse(response.getBody());
-        Timestamp now = Timestamp.valueOf(LocalDateTime.now());
 
         int status = response.getStatus();
         String title = document.title();
@@ -45,6 +43,6 @@ public final class UrlUtils {
         Element descriptionElement = document.selectFirst("meta[name=description]");
         String description = descriptionElement != null ? descriptionElement.attr("content") : "";
 
-        return new UrlCheck(status, title, h1, description, url.getId(), now);
+        return new UrlCheck(status, title, h1, description, url.getId());
     }
 }
