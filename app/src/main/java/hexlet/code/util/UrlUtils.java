@@ -10,8 +10,6 @@ import org.jsoup.nodes.Element;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
 import java.util.Objects;
 
 public final class UrlUtils {
