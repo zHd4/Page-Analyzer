@@ -24,9 +24,8 @@ public class UrlsController {
     public static void index(Context ctx) throws SQLException {
         List<Url> urls = UrlsRepository.getEntities();
 
-        Map<Long, UrlCheck> latestChecks = urls.stream()
-                .filter(url -> !url.getChecks().isEmpty())
-                .collect(Collectors.toMap(Url::getId, url -> url.getChecks().get(url.getChecks().size() - 1)));
+        Map<Long, UrlCheck> latestChecks = UrlChecksRepository.getLatest().stream()
+                .collect(Collectors.toMap(UrlCheck::getUrlId, urlCheck -> urlCheck));
 
         UrlsPage page = new UrlsPage(urls, latestChecks);
 
