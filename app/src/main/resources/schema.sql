@@ -13,6 +13,3 @@ CREATE TABLE IF NOT EXISTS url_checks (
   url_id                        BIGINT NOT NULL,
   created_at                    TIMESTAMP NOT NULL
 );
-
-ALTER TABLE urls ADD CONSTRAINT IF NOT EXISTS pk_url PRIMARY KEY (id);
-ALTER TABLE url_checks ADD CONSTRAINT IF NOT EXISTS pk_url_checks PRIMARY KEY (id);
