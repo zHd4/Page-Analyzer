@@ -65,11 +65,12 @@ public class App {
 
         Javalin app = Javalin.create(config -> {
             if (!isProduction()) {
-                config.plugins.enableDevLogging();
+                config.bundledPlugins.enableDevLogging();
             }
+
+            config.fileRenderer(new JavalinJte(createTemplateEngine()));
         });
 
-        JavalinJte.init(createTemplateEngine());
         addRoutes(app);
 
         app.before(ctx -> ctx.attribute("ctx", ctx));
