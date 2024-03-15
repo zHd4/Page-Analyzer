@@ -36,9 +36,20 @@ public class App {
         return System.getenv().getOrDefault("APP_ENV", "development");
     }
 
-    private static String getDatabaseUrl() {
-        return System.getenv().getOrDefault("JDBC_DATABASE_URL",
-                "jdbc:h2:mem:project;DB_CLOSE_DELAY=-1;");
+    private static HikariConfig getHikariConfig() {
+        HikariConfig config = new HikariConfig();
+
+        config.setJdbcUrl(System.getenv().getOrDefault("JDBC_DATABASE_URL",
+                "jdbc:h2:mem:project;DB_CLOSE_DELAY=-1;"));
+
+        if (System.getenv().containsKey("PG_USER") && System.getenv().containsKey("PG_PASSWORD")) {
+            config.setDriverClassName("org.postgresql.Driver");
+
+            config.setUsername(System.getenv().get("PG_USER"));
+            config.setPassword(System.getenv().get("PG_PASSWORD"));
+        }
+
+        return config;
     }
 
     private static boolean isProduction() {
@@ -54,10 +65,9 @@ public class App {
     }
 
     public static Javalin getApp() throws IOException, SQLException {
-        HikariConfig hikariConfig = new HikariConfig();
-        hikariConfig.setJdbcUrl(getDatabaseUrl());
-
+        HikariConfig hikariConfig = getHikariConfig();
         HikariDataSource dataSource = new HikariDataSource(hikariConfig);
+
         String sql = readResourceFile("schema.sql");
 
         BaseRepository.setDataSource(dataSource);
