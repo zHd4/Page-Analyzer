@@ -16,7 +16,7 @@ plugins {
     id 'com.github.johnrengelman.shadow' version '8.1.1'
 }
 
-group = 'hexlet.code'
+group = 'com.zhd4.pageanalyzer'
 version = '1.0-SNAPSHOT'
 
 repositories {
@@ -24,7 +24,7 @@ repositories {
 }
 
 application {
-    mainClass = 'hexlet.code.App'
+    mainClass = 'com.zhd4.pageanalyzer.App'
 }
 
 checkstyle {
