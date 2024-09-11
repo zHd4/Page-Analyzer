@@ -1,7 +1,7 @@
-package hexlet.code.util;
+package com.zhd4.pageanalyzer.util;
 
-import hexlet.code.model.Url;
-import hexlet.code.model.UrlCheck;
+import com.zhd4.pageanalyzer.model.Url;
+import com.zhd4.pageanalyzer.model.UrlCheck;
 import kong.unirest.HttpResponse;
 import kong.unirest.Unirest;
 import org.jsoup.Jsoup;

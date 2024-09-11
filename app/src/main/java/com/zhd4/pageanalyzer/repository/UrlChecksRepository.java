@@ -1,6 +1,6 @@
-package hexlet.code.repository;
+package com.zhd4.pageanalyzer.repository;
 
-import hexlet.code.model.UrlCheck;
+import com.zhd4.pageanalyzer.model.UrlCheck;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

@@ -1,4 +1,4 @@
-package hexlet.code.dto;
+package com.zhd4.pageanalyzer.dto;
 
 import lombok.Getter;
 import lombok.Setter;

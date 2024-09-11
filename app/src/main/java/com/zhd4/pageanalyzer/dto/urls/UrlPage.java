@@ -1,8 +1,8 @@
-package hexlet.code.dto.urls;
+package com.zhd4.pageanalyzer.dto.urls;
 
-import hexlet.code.dto.BasePage;
-import hexlet.code.model.Url;
-import hexlet.code.model.UrlCheck;
+import com.zhd4.pageanalyzer.dto.BasePage;
+import com.zhd4.pageanalyzer.model.Url;
+import com.zhd4.pageanalyzer.model.UrlCheck;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 

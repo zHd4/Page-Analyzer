@@ -1,13 +1,13 @@
-package hexlet.code.controller;
+package com.zhd4.pageanalyzer.controller;
 
-import hexlet.code.dto.urls.UrlPage;
-import hexlet.code.dto.urls.UrlsPage;
-import hexlet.code.model.Url;
-import hexlet.code.model.UrlCheck;
-import hexlet.code.repository.UrlChecksRepository;
-import hexlet.code.repository.UrlsRepository;
-import hexlet.code.util.NamedRoutes;
-import hexlet.code.util.UrlUtils;
+import com.zhd4.pageanalyzer.model.Url;
+import com.zhd4.pageanalyzer.model.UrlCheck;
+import com.zhd4.pageanalyzer.util.NamedRoutes;
+import com.zhd4.pageanalyzer.dto.urls.UrlPage;
+import com.zhd4.pageanalyzer.dto.urls.UrlsPage;
+import com.zhd4.pageanalyzer.repository.UrlChecksRepository;
+import com.zhd4.pageanalyzer.repository.UrlsRepository;
+import com.zhd4.pageanalyzer.util.UrlUtils;
 import io.javalin.http.Context;
 import io.javalin.http.NotFoundResponse;
 import kong.unirest.UnirestException;

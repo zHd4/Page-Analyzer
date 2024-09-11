@@ -1,22 +1,21 @@
-package hexlet.code;
+package com.zhd4.pageanalyzer;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
+import com.zhd4.pageanalyzer.controller.RootController;
+import com.zhd4.pageanalyzer.controller.UrlsController;
+import com.zhd4.pageanalyzer.util.NamedRoutes;
+import com.zhd4.pageanalyzer.util.Resources;
 import gg.jte.ContentType;
 import gg.jte.TemplateEngine;
 import gg.jte.resolve.ResourceCodeResolver;
-import hexlet.code.controller.RootController;
-import hexlet.code.controller.UrlsController;
-import hexlet.code.repository.BaseRepository;
-import hexlet.code.util.NamedRoutes;
+import com.zhd4.pageanalyzer.repository.BaseRepository;
 import io.javalin.Javalin;
 import io.javalin.rendering.template.JavalinJte;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
 import java.sql.SQLException;
-
-import static hexlet.code.util.Resources.readResourceFile;
 
 @Slf4j
 public class App {
@@ -68,7 +67,7 @@ public class App {
         HikariConfig hikariConfig = getHikariConfig();
         HikariDataSource dataSource = new HikariDataSource(hikariConfig);
 
-        String sql = readResourceFile("schema.sql");
+        String sql = Resources.readResourceFile("schema.sql");
 
         BaseRepository.setDataSource(dataSource);
         BaseRepository.runScript(sql);

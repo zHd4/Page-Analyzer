@@ -1,6 +1,6 @@
-package hexlet.code.util;
+package com.zhd4.pageanalyzer.util;
 
-import hexlet.code.App;
+import com.zhd4.pageanalyzer.App;
 
 import java.io.BufferedReader;
 import java.io.IOException;

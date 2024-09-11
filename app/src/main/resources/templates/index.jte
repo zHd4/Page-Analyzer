@@ -1,4 +1,4 @@
-@import hexlet.code.util.NamedRoutes
+@import util.com.zhd4.pageanalyzer.NamedRoutes
 
 @template.layout.page(
 content = @`

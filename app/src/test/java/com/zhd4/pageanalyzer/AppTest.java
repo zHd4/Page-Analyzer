@@ -1,10 +1,12 @@
-package hexlet.code;
+package com.zhd4.pageanalyzer;
 
-import hexlet.code.model.Url;
-import hexlet.code.model.UrlCheck;
-import hexlet.code.repository.UrlChecksRepository;
-import hexlet.code.repository.UrlsRepository;
-import hexlet.code.util.NamedRoutes;
+import com.zhd4.pageanalyzer.model.Url;
+import com.zhd4.pageanalyzer.model.UrlCheck;
+import com.zhd4.pageanalyzer.repository.UrlsRepository;
+import com.zhd4.pageanalyzer.util.FormatUtils;
+import com.zhd4.pageanalyzer.util.NamedRoutes;
+import com.zhd4.pageanalyzer.util.Resources;
+import com.zhd4.pageanalyzer.repository.UrlChecksRepository;
 import io.javalin.Javalin;
 import kong.unirest.HttpResponse;
 import kong.unirest.HttpStatus;
@@ -22,9 +24,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static hexlet.code.util.FormatUtils.formatTimestamp;
-import static hexlet.code.util.Resources.readResourceFile;
-import static hexlet.code.repository.BaseRepository.runScript;
+import static com.zhd4.pageanalyzer.repository.BaseRepository.runScript;
 
 public final class AppTest {
     private static final int PORT = 0;
@@ -40,7 +40,7 @@ public final class AppTest {
         baseUrl = "http://localhost:" + app.port();
         mockServer = new MockWebServer();
 
-        String testBody = readResourceFile("fixtures/index.html");
+        String testBody = Resources.readResourceFile("fixtures/index.html");
         MockResponse mockResponse = new MockResponse().setBody(testBody);
 
         mockServer.enqueue(mockResponse);
@@ -55,8 +55,8 @@ public final class AppTest {
 
     @AfterEach
     void afterEach() throws SQLException, IOException {
-        runScript(readResourceFile("truncate.sql"));
-        runScript(readResourceFile("seed.sql"));
+        runScript(Resources.readResourceFile("truncate.sql"));
+        runScript(Resources.readResourceFile("seed.sql"));
     }
 
     @Test
@@ -101,7 +101,7 @@ public final class AppTest {
 
         assertThat(body).contains(String.format("<td>%s</td>", url.getId()));
         assertThat(body).contains(String.format("<td>%s</td>", url.getName()));
-        assertThat(body).contains(String.format("<td>%s</td>", formatTimestamp(url.getCreatedAt())));
+        assertThat(body).contains(String.format("<td>%s</td>", FormatUtils.formatTimestamp(url.getCreatedAt())));
     }
 
     @Test

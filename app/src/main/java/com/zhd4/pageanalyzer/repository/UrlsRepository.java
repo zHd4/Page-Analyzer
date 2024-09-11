@@ -1,6 +1,6 @@
-package hexlet.code.repository;
+package com.zhd4.pageanalyzer.repository;
 
-import hexlet.code.model.Url;
+import com.zhd4.pageanalyzer.model.Url;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

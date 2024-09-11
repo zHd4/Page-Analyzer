@@ -1,4 +1,4 @@
-package hexlet.code.controller;
+package com.zhd4.pageanalyzer.controller;
 
 import io.javalin.http.Context;
 

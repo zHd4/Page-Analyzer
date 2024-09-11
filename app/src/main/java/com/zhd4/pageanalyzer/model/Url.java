@@ -1,4 +1,4 @@
-package hexlet.code.model;
+package com.zhd4.pageanalyzer.model;
 
 import lombok.Getter;
 import lombok.Setter;

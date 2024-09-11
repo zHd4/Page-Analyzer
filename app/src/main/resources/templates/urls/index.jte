@@ -1,7 +1,7 @@
-@import static hexlet.code.util.FormatUtils.formatTimestamp
-@import hexlet.code.dto.urls.UrlsPage
-@import hexlet.code.model.Url
-@import hexlet.code.util.NamedRoutes
+@import static util.com.zhd4.pageanalyzer.FormatUtils.formatTimestamp
+@import urls.dto.com.zhd4.pageanalyzer.UrlsPage
+@import model.com.zhd4.pageanalyzer.Url
+@import util.com.zhd4.pageanalyzer.NamedRoutes
 @param UrlsPage page
 
 @template.layout.page(
