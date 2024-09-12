@@ -1,4 +1,4 @@
-@import util.com.zhd4.pageanalyzer.NamedRoutes
+@import com.zhd4.pageanalyzer.util.NamedRoutes
 
 @template.layout.page(
 content = @`
