@@ -1,5 +1,5 @@
 @import static com.zhd4.pageanalyzer.util.FormatUtils.formatTimestamp
-@import com.zhd4.pageanalyzer.urls.dto.UrlsPage
+@import com.zhd4.pageanalyzer.dto.urls.UrlsPage
 @import com.zhd4.pageanalyzer.model.Url
 @import com.zhd4.pageanalyzer.util.NamedRoutes
 @param UrlsPage page
