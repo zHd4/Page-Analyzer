@@ -3,7 +3,6 @@
 
 <p>
     Page Analyzer is a Javalin-based web application for checking websites for SEO suitability. 
-<a href="https://hexlet-java-project-72.onrender.com">Demo</a>
 </p>
 
 <a href="https://github.com/zHd4/java-project-72/actions/workflows/main.yml"><img src="https://github.com/zHd4/java-project-72/actions/workflows/main.yml/badge.svg" /></a>
