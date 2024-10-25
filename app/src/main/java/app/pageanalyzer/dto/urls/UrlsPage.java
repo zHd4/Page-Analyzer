@@ -1,8 +1,8 @@
-package com.zhd4.pageanalyzer.dto.urls;
+package app.pageanalyzer.dto.urls;
 
-import com.zhd4.pageanalyzer.dto.BasePage;
-import com.zhd4.pageanalyzer.model.Url;
-import com.zhd4.pageanalyzer.model.UrlCheck;
+import app.pageanalyzer.dto.BasePage;
+import app.pageanalyzer.model.Url;
+import app.pageanalyzer.model.UrlCheck;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 

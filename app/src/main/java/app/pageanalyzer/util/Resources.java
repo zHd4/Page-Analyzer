@@ -1,6 +1,6 @@
-package com.zhd4.pageanalyzer.util;
+package app.pageanalyzer.util;
 
-import com.zhd4.pageanalyzer.App;
+import app.pageanalyzer.App;
 
 import java.io.BufferedReader;
 import java.io.IOException;

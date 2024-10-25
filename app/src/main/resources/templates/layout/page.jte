@@ -1,5 +1,5 @@
 @import gg.jte.Content
-@import com.zhd4.pageanalyzer.util.NamedRoutes
+@import app.pageanalyzer.util.NamedRoutes
 
 @param Content content
 

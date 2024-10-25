@@ -1,4 +1,4 @@
-package com.zhd4.pageanalyzer.dto;
+package app.pageanalyzer.dto;
 
 import lombok.Getter;
 import lombok.Setter;

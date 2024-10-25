@@ -1,7 +1,7 @@
-@import static com.zhd4.pageanalyzer.util.FormatUtils.formatTimestamp
-@import com.zhd4.pageanalyzer.dto.urls.UrlPage
-@import com.zhd4.pageanalyzer.util.NamedRoutes
-@import com.zhd4.pageanalyzer.model.UrlCheck
+@import static app.pageanalyzer.util.FormatUtils.formatTimestamp
+@import app.pageanalyzer.dto.urls.UrlPage
+@import app.pageanalyzer.util.NamedRoutes
+@import app.pageanalyzer.model.UrlCheck
 @param UrlPage page
 
 @template.layout.page(

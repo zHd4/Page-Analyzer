@@ -1,4 +1,4 @@
-package com.zhd4.pageanalyzer.controller;
+package app.pageanalyzer.controller;
 
 import io.javalin.http.Context;
 

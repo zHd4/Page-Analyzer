@@ -1,4 +1,4 @@
-package com.zhd4.pageanalyzer.repository;
+package app.pageanalyzer.repository;
 
 import com.zaxxer.hikari.HikariDataSource;
 

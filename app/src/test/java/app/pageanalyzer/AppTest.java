@@ -1,12 +1,12 @@
-package com.zhd4.pageanalyzer;
+package app.pageanalyzer;
 
-import com.zhd4.pageanalyzer.model.Url;
-import com.zhd4.pageanalyzer.model.UrlCheck;
-import com.zhd4.pageanalyzer.repository.UrlsRepository;
-import com.zhd4.pageanalyzer.util.FormatUtils;
-import com.zhd4.pageanalyzer.util.NamedRoutes;
-import com.zhd4.pageanalyzer.util.Resources;
-import com.zhd4.pageanalyzer.repository.UrlChecksRepository;
+import app.pageanalyzer.model.Url;
+import app.pageanalyzer.model.UrlCheck;
+import app.pageanalyzer.repository.UrlsRepository;
+import app.pageanalyzer.util.FormatUtils;
+import app.pageanalyzer.util.NamedRoutes;
+import app.pageanalyzer.util.Resources;
+import app.pageanalyzer.repository.UrlChecksRepository;
 import io.javalin.Javalin;
 import kong.unirest.HttpResponse;
 import kong.unirest.HttpStatus;
@@ -24,7 +24,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static com.zhd4.pageanalyzer.repository.BaseRepository.runScript;
+import static app.pageanalyzer.repository.BaseRepository.runScript;
 
 public final class AppTest {
     private static final int PORT = 0;

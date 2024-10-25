@@ -1,6 +1,6 @@
-package com.zhd4.pageanalyzer.repository;
+package app.pageanalyzer.repository;
 
-import com.zhd4.pageanalyzer.model.Url;
+import app.pageanalyzer.model.Url;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

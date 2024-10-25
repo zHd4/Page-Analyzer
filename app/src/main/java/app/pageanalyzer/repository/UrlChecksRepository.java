@@ -1,6 +1,6 @@
-package com.zhd4.pageanalyzer.repository;
+package app.pageanalyzer.repository;
 
-import com.zhd4.pageanalyzer.model.UrlCheck;
+import app.pageanalyzer.model.UrlCheck;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

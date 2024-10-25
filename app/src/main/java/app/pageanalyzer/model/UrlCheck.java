@@ -1,4 +1,4 @@
-package com.zhd4.pageanalyzer.model;
+package app.pageanalyzer.model;
 
 import lombok.Getter;
 import lombok.Setter;

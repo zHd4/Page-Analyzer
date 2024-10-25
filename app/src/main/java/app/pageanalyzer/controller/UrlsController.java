@@ -1,13 +1,13 @@
-package com.zhd4.pageanalyzer.controller;
+package app.pageanalyzer.controller;
 
-import com.zhd4.pageanalyzer.model.Url;
-import com.zhd4.pageanalyzer.model.UrlCheck;
-import com.zhd4.pageanalyzer.util.NamedRoutes;
-import com.zhd4.pageanalyzer.dto.urls.UrlPage;
-import com.zhd4.pageanalyzer.dto.urls.UrlsPage;
-import com.zhd4.pageanalyzer.repository.UrlChecksRepository;
-import com.zhd4.pageanalyzer.repository.UrlsRepository;
-import com.zhd4.pageanalyzer.util.UrlUtils;
+import app.pageanalyzer.model.Url;
+import app.pageanalyzer.model.UrlCheck;
+import app.pageanalyzer.util.NamedRoutes;
+import app.pageanalyzer.dto.urls.UrlPage;
+import app.pageanalyzer.dto.urls.UrlsPage;
+import app.pageanalyzer.repository.UrlChecksRepository;
+import app.pageanalyzer.repository.UrlsRepository;
+import app.pageanalyzer.util.UrlUtils;
 import io.javalin.http.Context;
 import io.javalin.http.NotFoundResponse;
 import kong.unirest.UnirestException;

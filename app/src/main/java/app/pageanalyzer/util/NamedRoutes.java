@@ -1,4 +1,4 @@
-package com.zhd4.pageanalyzer.util;
+package app.pageanalyzer.util;
 
 public final class NamedRoutes {
     public static String rootPath() {

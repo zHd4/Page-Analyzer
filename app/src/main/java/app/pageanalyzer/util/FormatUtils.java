@@ -1,4 +1,4 @@
-package com.zhd4.pageanalyzer.util;
+package app.pageanalyzer.util;
 
 import java.sql.Timestamp;
 import java.time.format.DateTimeFormatter;

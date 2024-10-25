@@ -1,15 +1,15 @@
-package com.zhd4.pageanalyzer;
+package app.pageanalyzer;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
-import com.zhd4.pageanalyzer.controller.RootController;
-import com.zhd4.pageanalyzer.controller.UrlsController;
-import com.zhd4.pageanalyzer.util.NamedRoutes;
-import com.zhd4.pageanalyzer.util.Resources;
+import app.pageanalyzer.controller.RootController;
+import app.pageanalyzer.controller.UrlsController;
+import app.pageanalyzer.util.NamedRoutes;
+import app.pageanalyzer.util.Resources;
 import gg.jte.ContentType;
 import gg.jte.TemplateEngine;
 import gg.jte.resolve.ResourceCodeResolver;
-import com.zhd4.pageanalyzer.repository.BaseRepository;
+import app.pageanalyzer.repository.BaseRepository;
 import io.javalin.Javalin;
 import io.javalin.rendering.template.JavalinJte;
 import lombok.extern.slf4j.Slf4j;
